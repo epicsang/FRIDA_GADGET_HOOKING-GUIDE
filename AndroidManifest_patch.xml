@@ -1,0 +1,23 @@
+<!-- ===== ANDROID MANIFEST PATCH ===== -->
+<!-- Add this attribute to the <application> tag in AndroidManifest.xml -->
+
+<!-- BEFORE: -->
+<application
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    ...>
+
+<!-- AFTER: -->
+<application
+    android:allowBackup="true"
+    android:extractNativeLibs="true"
+    android:icon="@mipmap/ic_launcher"
+    ...>
+
+<!-- ===== WHY? ===== -->
+<!--
+Android 9+ (API 28+) doesn't extract native libraries by default.
+This forces extraction so Frida Gadget can load properly.
+Without this, the app will crash with:
+  java.lang.UnsatisfiedLinkError: dlopen failed: library "libfrida-gadget.so" not found
+-->

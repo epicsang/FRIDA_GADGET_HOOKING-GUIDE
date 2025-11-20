@@ -1,0 +1,24 @@
+# ===== FRIDA GADGET LOADER - Add this to MainActivity.smali onCreate() =====
+# Insert AFTER invoke-super but BEFORE any other code
+
+    # ===== FRIDA GADGET LOADER START =====
+    const-string v0, "frida-gadget"
+    invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
+    # ===== FRIDA GADGET LOADER END =====
+
+# Example placement:
+# .method protected onCreate(Landroid/os/Bundle;)V
+#     .locals 1
+#
+#     invoke-super {p0, p1}, Landroidx/appcompat/app/AppCompatActivity;->onCreate(Landroid/os/Bundle;)V
+#
+#     # ===== INSERT HERE =====
+#     const-string v0, "frida-gadget"
+#     invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
+#     # ===== END INSERT =====
+#
+#     const v0, 0x7f0b001c
+#     invoke-virtual {p0, v0}, Lcom/example/app/MainActivity;->setContentView(I)V
+#
+#     return-void
+# .end method
